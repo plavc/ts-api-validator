@@ -1,0 +1,32 @@
+{
+  "name": "ts-api-validator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plavc/ts-api-validator.git"
+  },
+  "author": "gregor@plavcak.net",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/plavc/ts-api-validator/issues"
+  },
+  "homepage": "https://github.com/plavc/ts-api-validator#readme",
+  "scripts": {
+    "build": "tsc -w",
+    "start": "node dist/index.js",
+    "test": "node_modules/ts-node/dist/bin.js test/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.4",
+    "@types/glob": "^7.1.1",
+    "ts-node": "^8.0.3"
+  },
+  "dependencies": {
+    "ajv": "^6.10.0",
+    "glob": "~7.1.2",
+    "typescript": "^3.0.3",
+    "typescript-json-schema": "^0.37.0"
+  }
+}

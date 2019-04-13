@@ -1,0 +1,14 @@
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "birthDate": "2012-04-23T18:25:43.511Z",
+    "gender": "1",
+    "linkedinProfile": "https://linkedin.com/profiles/35332423",
+    "email": "jon.doe@fakemail.com",
+    "address": {    
+        "street": "Columbia Street 22",
+        "city": "Washington",
+        "postalCode": "1930003",
+        "country": "Washington DC"
+    }
+}
