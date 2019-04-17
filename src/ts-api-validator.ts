@@ -1,4 +1,5 @@
 import * as Ajv from "ajv";
+import { TSAPIValidatorResult } from "./ts-api-validator-result";
 
 export class TSAPIValidator {
 
@@ -8,7 +9,7 @@ export class TSAPIValidator {
         this.ajv = new Ajv({ allErrors: true });
     }
 
-    public validate(data: string, schema: string | object) {
+    public validate(data: string, schema: string | object): TSAPIValidatorResult {
 
         let schemaInternal: object = { };
 
@@ -22,9 +23,6 @@ export class TSAPIValidator {
 
         const valid = this.ajv.validate(schemaInternal, data);
 
-        return {
-            valid: valid,
-            error: this.ajv.errors
-        };
+        return new TSAPIValidatorResult(valid, this.ajv.errors);
     }
 }
