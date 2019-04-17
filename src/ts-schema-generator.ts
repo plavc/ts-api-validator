@@ -4,6 +4,7 @@ import * as fs from "fs";
 import * as glob from "glob";
 
 import { resolve } from "path";
+import { SchemaFilenameProvider } from "./schema-filename-provider";
 
 export class TSSchemaGenerator {
 
@@ -12,14 +13,41 @@ export class TSSchemaGenerator {
 
     public basePath: undefined | string = undefined;
 
-    public schemasOutputFolder: string = './schemas';
+    private schemaFilenameProvider = new SchemaFilenameProvider();
 
     public settings: TJS.PartialArgs = {
-        required: true
+        ref: true,
+        aliasRef: true,
+        topRef: true,
+        titles: true,
+        defaultProps: true,
+        noExtraProps: true,
+        propOrder: true,
+        typeOfKeyword: true,
+        required: true,
+        strictNullChecks: true,
+        ignoreErrors: false
     };
 
     public compilerOptions: TJS.CompilerOptions = {
-        strictNullChecks: true
+        ref: true,
+        aliasRef: true,
+        topRef: true,
+        titles: true,
+        defaultProps: false,
+        noExtraProps: true,
+        propOrder: true,
+        typeOfKeyword: true,
+        required: true,
+        strictNullChecks: true,
+        ignoreErrors: false,
+        // out: string,
+        validationKeywords: [],
+        include: [],
+        excludePrivate: false,
+        uniqueNames: true,
+        rejectDateType: false,
+        //id: string,
     }
 
     public static findFiles(filePattern: string): string[] {
@@ -35,16 +63,16 @@ export class TSSchemaGenerator {
         return resolvedInternal;
     }
 
-    static createWithPattern(modelFilesPattern: string): TSSchemaGenerator {
+    static createWithPattern(modelFilesPattern: string, schemasOutputFolder: string): TSSchemaGenerator {
         const files = this.findFiles(modelFilesPattern);
-        return new TSSchemaGenerator(files);
+        return this.create(files, schemasOutputFolder);
     }
 
-    static create(modelFiles: string[]): TSSchemaGenerator {
-        return new TSSchemaGenerator(modelFiles);
+    static create(modelFiles: string[], schemasOutputFolder: string): TSSchemaGenerator {
+        return new TSSchemaGenerator(modelFiles, schemasOutputFolder);
     }
 
-    private constructor(modelFiles: string[]) {
+    private constructor(public readonly modelFiles: string[], public readonly schemasOutputFolder: string) {
         this.createProgram(modelFiles);
         this.createGenerator();
     }
@@ -63,13 +91,9 @@ export class TSSchemaGenerator {
         }
     }
 
-    private getFileName(modelName: string) {
-        return "_" + modelName.toLowerCase() + '.json';
-    }
-
     private writeSchemaFile(modelName: string, schema: object) {
         const schemaStr = JSON.stringify(schema, null, 2);
-        fs.writeFileSync(this.schemasOutputFolder + '/' + this.getFileName(modelName), schemaStr);
+        fs.writeFileSync(this.schemaFilenameProvider.getFilePath(modelName, this.schemasOutputFolder), schemaStr);
     }
 
     private mkdirOutput() {

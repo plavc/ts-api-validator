@@ -8,5 +8,4 @@ export interface IUser {
     linkedinProfile?: string;
     email?: string;
     address: IAddress;
-
 }
