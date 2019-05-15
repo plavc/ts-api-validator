@@ -1,18 +1,27 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
+    "target": "es5",
     "moduleResolution": "node",
+    "isolatedModules": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "declaration": true,
-    "sourceMap": true,
     "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "noLib": false,
+    "preserveConstEnums": true,
     "outDir": "dist",
     "strict": true,
-    "baseUrl": ".",
     "typeRoots": ["node_modules/@types"]
   },
   "include": [
-    "src/**/*", "src/index.ts"
+    "src/**/*",
+    "node_modules/@types/**/*.d.ts"
   ],
   "exclude": [
     "node_modules"

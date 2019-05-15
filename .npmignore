@@ -66,4 +66,4 @@ typings/
 example
 .dockerignore
 
-scripts
+schemas

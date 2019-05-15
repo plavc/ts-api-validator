@@ -13,7 +13,7 @@ class CliGenerate {
             .option('-t, --trace', 'Print to standard output results.')
             .action((pattern, cmd) => this.actionGenerate(pattern, this))
             .parse(process.argv);
-
+            
         if (typeof this.pattern === 'undefined') {
             console.error('no <pattern> given!');
             process.exit(1);
@@ -36,7 +36,7 @@ class CliGenerate {
     }
 
     private generate(filesPattern: string, outputFolder: string) {
-        TSSchemaGenerator.createWithPattern(filesPattern, outputFolder).generateSchema();
+        TSSchemaGenerator.createWithPattern(filesPattern, outputFolder, this.verbose).generateSchema();
     }
 }
 

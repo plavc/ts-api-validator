@@ -1,10 +1,10 @@
 {
   "name": "@plavc/ts-api-validator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generate JSON schema from Typescript interfaces and validate JSON against schema.",
-  "main": "./dist/cli.js",
+  "main": "./bin/ts-api-validator",
   "bin": {
-    "pl-ts-api-validator": "./dist/cli.js"
+    "ts-api-validator": "./bin/ts-api-validator"
   },
   "private": false,
   "keywords": [
@@ -36,6 +36,6 @@
     "ajv": "^6.10.0",
     "commander": "^2.20.0",
     "glob": "~7.1.2",
-    "typescript-json-schema": "^0.37.0"
+    "typescript-json-schema": "^0.38.0"
   }
 }

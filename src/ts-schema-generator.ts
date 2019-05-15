@@ -2,16 +2,14 @@
 import * as TJS from "typescript-json-schema";
 import * as fs from "fs";
 import * as glob from "glob";
+import * as path from "path";
 
-import { resolve } from "path";
 import { SchemaFilenameProvider } from "./schema-filename-provider";
 
 export class TSSchemaGenerator {
 
     private _program: TJS.Program | undefined;
     private _generator: TJS.JsonSchemaGenerator | null = null;
-
-    public basePath: undefined | string = undefined;
 
     private schemaFilenameProvider = new SchemaFilenameProvider();
 
@@ -40,31 +38,37 @@ export class TSSchemaGenerator {
         typeOfKeyword: true,
         required: true,
         strictNullChecks: true,
-        ignoreErrors: false,
+        ignoreErrors: true,
         // out: string,
         validationKeywords: [],
         include: [],
         excludePrivate: false,
         uniqueNames: true,
         rejectDateType: false,
+        skipLibCheck: true,
+        skipDefaultLibCheck: true
         //id: string,
     }
 
-    public static findFiles(filePattern: string): string[] {
-
+    public static findFiles(filePattern: string, trace: boolean = false): string[] {
         const globBase = new glob.GlobSync(filePattern);
 
         const resolvedInternal: string[] = []
 
         globBase.found.forEach(tsFile => {
-            resolvedInternal.push(resolve(tsFile));
+            resolvedInternal.push(path.resolve(tsFile));
         });
+
+        if (trace) {
+            console.log('Source files:');
+            resolvedInternal.forEach(f => console.log('  ' + f));
+        }
 
         return resolvedInternal;
     }
 
-    static createWithPattern(modelFilesPattern: string, schemasOutputFolder: string): TSSchemaGenerator {
-        const files = this.findFiles(modelFilesPattern);
+    static createWithPattern(modelFilesPattern: string, schemasOutputFolder: string, trace: boolean = false): TSSchemaGenerator {
+        const files = this.findFiles(modelFilesPattern, trace);
         return this.create(files, schemasOutputFolder);
     }
 
@@ -78,7 +82,7 @@ export class TSSchemaGenerator {
     }
 
     private createProgram(modelFiles: string[]) {
-        this._program = TJS.getProgramFromFiles(modelFiles, this.compilerOptions, this.basePath);
+        this._program = TJS.getProgramFromFiles(modelFiles, this.compilerOptions);
     }
 
     private createGenerator() {
