@@ -4,7 +4,7 @@ Generate JSON schema from Typescript interfaces and validate JSON against schema
 
 ## Schema generation
 
-`node dist/cli.js generate -o 'example/schemas' -t example/**/*.model.ts`
+`node dist/cli.js generate -o 'example/schemas' -t 'example/**/*.model.ts'`
 
 ## Schema validation
 
