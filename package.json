@@ -1,6 +1,6 @@
 {
   "name": "@plavc/ts-api-validator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate JSON schema from Typescript interfaces and validate JSON against schema.",
   "main": "./bin/ts-api-validator",
   "bin": {
